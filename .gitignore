@@ -1,0 +1,6 @@
+# Local database
+data/db
+
+# Node modules
+node_modules/
+npm-debug.log

@@ -1,6 +1,6 @@
 # Project Name
 
-> Pithy project description
+> DogeBot 9000 - So Project Much Wow
 
 ## Team
 
@@ -21,17 +21,17 @@
 
 ## Usage
 
-> Some usage instructions
+> A simple front end interface for control of DogeBot on slack. Access to message history and basic search of messages.
 
 ## Requirements
 
-- Node 0.10.x
+- Node 6.1.0
 - Redis 2.6.x
 - Postgresql 9.1.x
-- etc
-- etc
+
 
 ## Development
+
 
 ### Installing Dependencies
 
