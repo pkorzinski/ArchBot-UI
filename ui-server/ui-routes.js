@@ -1,9 +1,9 @@
-//var Messages = require('./db/collections/messages.js');
-//var Message = require('./db/models/message.js');
+var Message = require('./models/message.js')
 var q = require('q');
-//bind some functions to model
 
-//export functions
+var findMessage = q.nbind(Message.findOne, Message);
+var createMessage = q.nbind(Message.create, Message);
+var findAllMessages = q.nbind(Message.find, Message);
 
 module.exports = function(app) {
 
