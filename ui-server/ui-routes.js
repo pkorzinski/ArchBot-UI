@@ -1,6 +1,6 @@
-// require a model for db
-// require promises (q)
-
+var Messages = require('./db/collections/messages.js');
+var Message = require('./db/models/message.js');
+var q = require('q');
 //bind some functions to model
 
 //export functions

@@ -1,9 +1,8 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
-//var bookshelf = require('bookshelf');
-
-//var db = ;
+var path = require('path');
+var db = require('./db/config.js')
 
 var app = express();
 
