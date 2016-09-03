@@ -5,7 +5,6 @@
   "main": "ui-server/ui-server.js",
   "scripts": {
     "start": "node ui-server/ui-server.js"
-    //"postinstall": "bower install"
   },
   "author": "Michael Daof, Jason Holtkamp, Patrik Korzinski, Jim Yang",
   "license": "GPL-3.0",
