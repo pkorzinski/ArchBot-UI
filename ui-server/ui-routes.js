@@ -1,4 +1,5 @@
-var Message = require('./models/message.js')
+var Message = require('../db/models/message.js')
+var path= require('path');
 var q = require('q');
 
 var findMessage = q.nbind(Message.findOne, Message);
@@ -10,6 +11,6 @@ module.exports = function(app) {
   // other routes
 
   app.get('*', function(req, res) {
-    res.sendfile('../public/views/index.html');
+    res.sendfile(path.join(__dirname, '../public/views', 'index.html'));
   });
 };
