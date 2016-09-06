@@ -2,6 +2,6 @@
   "name": "DogeBot9000-UIServer",
   "version": "0.0.1",
   "dependencies": {
-    "react": "~15.3.1",
+    "react": "~15.3.1"
   }
 }
