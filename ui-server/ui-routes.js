@@ -9,7 +9,7 @@ var findAllMessages = q.nbind(Message.find, Message);
 module.exports = function(app) {
   // other routes
   app.get('/api/messages/', function(req, res) {
-    console.log('Retrieving all messages from databse.');
+    console.log('Retrieving all messages from database.');
     findAllMessages({})
       .then(function(messages) {
         res.json(messages);
@@ -21,7 +21,7 @@ module.exports = function(app) {
 
   app.post('/api/messages/', function(req, res) {
     console.log('Posted message to database.');
-    console.log('Request format: ', req);
+    console.log('Request body: ', req.body);
     // double check what format this will be
     var message = req.body;
     // edit the below newMessage as soon as we know what the bot server sends.
