@@ -48,7 +48,7 @@ module.exports = function(app) {
 
   app.get('*', function(req, res) {
     // converts react/index component to a react component
-    var ReactComponent = React.createElement(indexComponent);
+    var ReactComponent = React.createElement(indexComponent, Object.assign({}, this.props, { more: 'values' }));
     // renders the component to an html string
     staticMarkup = ReactDOMServer.renderToString(ReactComponent);
     // passes the html string into the view as indexComponentMarkup
