@@ -3,7 +3,7 @@ var path= require('path');
 var q = require('q');
 
 var React = require('react');
-var ReactDOMServer = require('react-dom/server')
+var ReactDOMServer = require('react-dom/server');
 var indexComponent = require('./react/index');
 
 var findMessage = q.nbind(Message.findOne, Message);
@@ -11,7 +11,6 @@ var createMessage = q.nbind(Message.create, Message);
 var findAllMessages = q.nbind(Message.find, Message);
 
 module.exports = function(app) {
-  // other routes
   app.get('/api/messages/', function(req, res) {
     console.log('Retrieving all messages from database.');
     findAllMessages({})
@@ -25,18 +24,13 @@ module.exports = function(app) {
 
   app.post('/api/messages/', function(req, res) {
     console.log('Posted message to database.');
-    console.log('Request body: ', req.body);
-    // double check what format this will be
-    var message = req.body;
-    // edit the below newMessage as soon as we know what the bot server sends.
-    var newMessage = {
-      user: message.user,
-      text: message.text,
-      channel: message.channel,
-      timestamp: message.ts
-    };
-    createMessage(newMessage)
-      .then(function(createdMessage) {
+    req.body.forEach(function(item, index) {
+      createMessage({
+        user: item.user,
+        text: item.text,
+        channel: item.channel,
+        timestamp: item.ts
+      }).then(function(createdMessage) {
         if(createdMessage) {
           res.json(createdMessage);
         }
@@ -44,6 +38,7 @@ module.exports = function(app) {
       .fail(function(err) {
         res.status(500).send(err);
       });
+    });
   });
 
   app.get('*', function(req, res) {
