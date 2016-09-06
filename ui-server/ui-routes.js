@@ -21,6 +21,7 @@ module.exports = function(app) {
 
   app.post('/api/messages/', function(req, res) {
     console.log('Posted message to database.');
+    console.log('Request format: ', req);
     // double check what format this will be
     var message = req.body;
     // edit the below newMessage as soon as we know what the bot server sends.
@@ -28,7 +29,7 @@ module.exports = function(app) {
       user: message.user,
       text: message.text,
       channel: message.channel,
-      timestamp: message.createdAt
+      timestamp: message.ts
     };
     createMessage(newMessage)
       .then(function(createdMessage) {
