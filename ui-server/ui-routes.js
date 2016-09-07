@@ -54,7 +54,7 @@ module.exports = function(app) {
   });
 
   app.get('*', function(req, res) {
-    res.sendfile('./public/views/index.html');
+    res.sendFile(path.join(__dirname + '/../public/views/index.html'));
 
     // converts react/index component to a react component
     // var ReactComponent = React.createElement(indexComponent, Object.assign({}, this.props, { more: 'values' }));
