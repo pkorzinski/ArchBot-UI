@@ -21470,6 +21470,7 @@
 	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
 	    _this.state = { data: false };
+	    _this.data = [];
 
 	    _this.dummyData = [{ type: 'message',
 	      key: 1,
@@ -21496,7 +21497,6 @@
 	      text: 'this is message3',
 	      username: 'brogrammer'
 	    }];
-
 	    return _this;
 	  }
 
@@ -21507,6 +21507,7 @@
 	      fetch("/api/messages", { method: "GET" }).then(function (res) {
 	        console.log("fetch function called!");
 	        console.log(res);
+	        self.data = res;
 	        self.setState({ data: true });
 	      });
 	    }
@@ -21522,10 +21523,9 @@
 	            null,
 	            'Your team messages'
 	          ),
-	          _react2.default.createElement(_MessagesList2.default, { data: this.dummyData })
+	          _react2.default.createElement(_MessagesList2.default, { data: this.data })
 	        );
 	      }
-
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -21576,10 +21576,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	//messages
-
 	var Message = function Message(prop) {
-
 	  return React.createElement(
 	    "div",
 	    null,
