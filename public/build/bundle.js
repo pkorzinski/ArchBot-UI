@@ -21469,6 +21469,8 @@
 
 	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
+	    _this.state = { data: false };
+
 	    _this.dummyData = [{ type: 'message',
 	      key: 1,
 	      channel: 'C43214FDSA',
@@ -21495,33 +21497,45 @@
 	      username: 'brogrammer'
 	    }];
 
-	    fetch("/api/messages", { method: "GET" }).then(function (res) {
-	      console.log("fetch function called!");
-	      console.log(res);
-	    });
 	    return _this;
 	  }
 
 	  _createClass(App, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var self = this;
+	      fetch("/api/messages", { method: "GET" }).then(function (res) {
+	        console.log("fetch function called!");
+	        console.log(res);
+	        self.setState({ data: true });
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render(data) {
+	      if (this.state.data) {
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'h1',
+	            null,
+	            'Your team messages'
+	          ),
+	          _react2.default.createElement(_MessagesList2.default, { data: this.dummyData })
+	        );
+	      }
+
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(
-	          'h1',
-	          null,
-	          'Your team messages'
-	        ),
-	        _react2.default.createElement(_MessagesList2.default, { data: this.dummyData })
+	        'no data!'
 	      );
 	    }
 	  }]);
 
 	  return App;
 	}(_react2.default.Component);
-
-	;
 
 	module.exports = App;
 
