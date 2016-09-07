@@ -42,20 +42,19 @@ module.exports = function(app) {
         channel: item.channel,
         timestamp: item.ts
       })
-      .then(function(createdMessage) {
-        if(createdMessage) {
-          res.json(createdMessage);
-        }
-      })
-      .fail(function(err) {
-        res.status(500).send(err);
-      });
+      // .then(function(createdMessage) {
+      //   if(createdMessage) {
+      //     res.json(createdMessage);
+      //   }
+      // })
+      // .fail(function(err) {
+      //   res.status(500).send(err);
+      // });
     });
   });
 
   app.get('*', function(req, res) {
     res.sendFile(path.join(__dirname + '/../public/views/index.html'));
-
     // converts react/index component to a react component
     // var ReactComponent = React.createElement(indexComponent, Object.assign({}, this.props, { more: 'values' }));
     // // renders the component to an html string
