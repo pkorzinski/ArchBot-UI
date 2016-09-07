@@ -21445,6 +21445,14 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _MessagesList = __webpack_require__(173);
+
+	var _MessagesList2 = _interopRequireDefault(_MessagesList);
+
+	var _Messages = __webpack_require__(174);
+
+	var _Messages2 = _interopRequireDefault(_Messages);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21459,16 +21467,53 @@
 	  function App(props) {
 	    _classCallCheck(this, App);
 
-	    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+	    _this.dummyData = [{ type: 'message',
+	      key: 1,
+	      channel: 'C43214FDSA',
+	      user: 'UASDF@4325FD',
+	      ts: '1473222394.000016',
+	      team: 'T27FSAC90',
+	      text: 'this is message1',
+	      username: 'brogrammer'
+	    }, { type: 'message',
+	      key: 2,
+	      channel: 'C43214FDSA',
+	      user: 'UASDF@4325FD',
+	      ts: '1473222394.000016',
+	      team: 'T27FSAC90',
+	      text: 'this is message2',
+	      username: 'brogrammer'
+	    }, { type: 'message',
+	      key: 3,
+	      channel: 'C43214FDSA',
+	      user: 'UASDF@4325FD',
+	      ts: '1473222394.000016',
+	      team: 'T27FSAC90',
+	      text: 'this is message3',
+	      username: 'brogrammer'
+	    }];
+
+	    fetch("/api/messages", { method: "GET" }).then(function (res) {
+	      console.log("fetch function called!");
+	      console.log(res);
+	    });
+	    return _this;
 	  }
 
 	  _createClass(App, [{
 	    key: 'render',
-	    value: function render() {
+	    value: function render(data) {
 	      return _react2.default.createElement(
-	        'h1',
+	        'div',
 	        null,
-	        'Hello World!!!'
+	        _react2.default.createElement(
+	          'h1',
+	          null,
+	          'Your team messages'
+	        ),
+	        _react2.default.createElement(_MessagesList2.default, { data: this.dummyData })
 	      );
 	    }
 	  }]);
@@ -21479,6 +21524,66 @@
 	;
 
 	module.exports = App;
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(React) {"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _Messages = __webpack_require__(174);
+
+	var _Messages2 = _interopRequireDefault(_Messages);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var MessagesList = function MessagesList(messages) {
+	  return React.createElement(
+	    "div",
+	    { className: "message-list" },
+	    messages.data.map(function (message) {
+	      return React.createElement(_Messages2.default, { key: message.key, message: message });
+	    })
+	  );
+	}; //Messages list
+	exports.default = MessagesList;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ },
+/* 174 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(React) {"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	//messages
+
+	var Message = function Message(prop) {
+
+	  return React.createElement(
+	    "div",
+	    null,
+	    React.createElement(
+	      "div",
+	      null,
+	      prop.message.username
+	    ),
+	    React.createElement(
+	      "div",
+	      null,
+	      prop.message.text
+	    )
+	  );
+	};
+
+	exports.default = Message;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }
 /******/ ]);
