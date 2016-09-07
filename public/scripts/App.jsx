@@ -5,6 +5,9 @@ import Messages from './Messages.jsx';
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {data:false};
+
+
 
     this.dummyData = [
 
@@ -39,13 +42,21 @@ class App extends React.Component {
     }
     ]
 
-    fetch("/api/messages", {method: "GET"}).then(function(res){
+  }
+
+    componentDidMount() {
+      var self = this;
+      fetch("/api/messages", {method: "GET"}).then(function(res){
         console.log("fetch function called!")
         console.log(res);
+        self.setState({data:true})
       })
     }
 
+
+
   render(data) {
+    if (this.state.data){
     return (
 
       <div>
@@ -58,7 +69,12 @@ class App extends React.Component {
 
       );
 
+    }
+
+    return (<div>no data!</div>)
   }
-};
+
+}
+
 
 module.exports = App;
