@@ -23,7 +23,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       hasData: false,
-      data: []
+      data: [],
+      userFilter: ''
     };
 
   }
@@ -57,6 +58,10 @@ class App extends React.Component {
     //     username: 'brogrammer'
     //   }
     // ];
+
+  filterFunction() {
+    console.log('filter me')
+  }
 
   refreshFunction() {
     var self = this;
