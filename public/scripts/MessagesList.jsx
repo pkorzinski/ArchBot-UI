@@ -7,12 +7,21 @@ var MessagesList = (messages) => {
     messages.refreshFunction();
   }
 
+  var divStyle = {
+    margin: "20px",
+    padding: "5px"
+  };
+
   return (
-    <div className = "message-list">
-    <button onClick = {refresh}>refresh</button>
+    <div className="message-list">
+      <button style={divStyle} className="btn btn-primary btn-lg" onClick={refresh}>
+        Refresh
+      </button>
+      <div>
       {messages.data.map(function(message){
         return <Message key={message._id} message={message}/>
       })}
+      </div>
     </div>
   )
 
