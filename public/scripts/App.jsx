@@ -27,7 +27,7 @@ class App extends React.Component {
     this.state = {
       hasData: false,
       data: [],
-      userFilter: ''
+      unfilteredData: []
     };
 
   }
@@ -63,7 +63,18 @@ class App extends React.Component {
     // ];
 
   filterFunction() {
-    console.log('filter me')
+    if (this.state.unfilteredData.length === 0) {
+      this.state.unfilteredData = this.state.data.slice(0)
+    }
+    this.setState({ data: this.state.unfilteredData })
+    var input = document.getElementById('input').value;
+    var filtered = [];
+    this.state.unfilteredData.forEach(function(el){
+      if (el.text.includes(input)) {
+        filtered.push(el)
+      }
+    })
+    this.setState({data: filtered})
   }
 
   refreshFunction() {
