@@ -21469,8 +21469,10 @@
 
 	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
-	    _this.state = { data: false };
-	    _this.data = [];
+	    _this.state = {
+	      hasData: false,
+	      data: []
+	    };
 
 	    _this.dummyData = [{ type: 'message',
 	      key: 1,
@@ -21504,11 +21506,13 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      var self = this;
-	      fetch("/api/messages", { method: "GET" }).then(function (res) {
-	        console.log("fetch function called!");
-	        console.log(res);
-	        self.data = res;
-	        self.setState({ data: true });
+	      fetch("/api/messages/", { method: "GET" }).then(function (response) {
+	        return response.json();
+	      }).then(function (data) {
+	        console.log(data);
+	        self.setState({ data: data });
+	      }).catch(function (error) {
+	        console.error(error);
 	      });
 	    }
 	  }, {
@@ -21523,7 +21527,7 @@
 	            null,
 	            'Your team messages'
 	          ),
-	          _react2.default.createElement(_MessagesList2.default, { data: this.data })
+	          _react2.default.createElement(_MessagesList2.default, { data: this.state.data })
 	        );
 	      }
 	      return _react2.default.createElement(
@@ -21560,7 +21564,7 @@
 	    "div",
 	    { className: "message-list" },
 	    messages.data.map(function (message) {
-	      return React.createElement(_Messages2.default, { key: message.key, message: message });
+	      return React.createElement(_Messages2.default, { key: message._id, message: message });
 	    })
 	  );
 	}; //Messages list
