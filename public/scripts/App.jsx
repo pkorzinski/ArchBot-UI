@@ -63,7 +63,7 @@ class App extends React.Component {
     // ];
 
   filterFunction() {
-    if (this.state.unfilteredData.length === 0) {
+    if (this.state.data.length > this.state.unfilteredData.length) {
       this.state.unfilteredData = this.state.data.slice(0)
     }
     this.setState({ data: this.state.unfilteredData })
