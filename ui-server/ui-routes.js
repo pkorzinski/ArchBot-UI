@@ -40,7 +40,7 @@ module.exports = function(app) {
         user: req.body[i].username || 'anonymous',
         text: req.body[i].text || '',
         channel: req.body[i].channel || '',
-        timestamp: new Date(timeStamp[0])
+        timestamp: Date.parse(timeStamp[0])
       });
       //console.log('NEWMESSAGE: ',newMessage);
       newMessage.save(function(err, data) {
