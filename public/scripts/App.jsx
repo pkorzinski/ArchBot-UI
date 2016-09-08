@@ -1,6 +1,20 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import MessageList from './MessagesList.jsx';
 import Messages from './Messages.jsx';
+
+// bootstrap components are imported from react-bootstrap module
+// https://react-bootstrap.github.io/components.html
+import { Jumbotron } from 'react-bootstrap';
+
+// create an instance of bootstrap module and fill it with stuff
+// bsClass is used for CSS classes
+// bsStyle can be used for bootstrap styles
+const jumbotronInstance = (
+  <Jumbotron>
+    <h1 bsClass="jumbo">Welcome to the Dogebot</h1>
+  </Jumbotron>
+)
 
 class App extends React.Component {
   constructor(props) {
@@ -54,10 +68,12 @@ class App extends React.Component {
     });
   }
 
+  // The bootstrap component instance can be added via handlebars inside of the render return
   render(data) {
     if (this.state.data){
       return (
         <div>
+          {jumbotronInstance}
           <h1>Your team messages</h1>
           <MessageList data = {this.state.data}/>
         </div>
