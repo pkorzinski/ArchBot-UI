@@ -21474,35 +21474,53 @@
 	      data: []
 	    };
 
-	    _this.dummyData = [{ type: 'message',
-	      key: 1,
-	      channel: 'C43214FDSA',
-	      user: 'UASDF@4325FD',
-	      ts: '1473222394.000016',
-	      team: 'T27FSAC90',
-	      text: 'this is message1',
-	      username: 'brogrammer'
-	    }, { type: 'message',
-	      key: 2,
-	      channel: 'C43214FDSA',
-	      user: 'UASDF@4325FD',
-	      ts: '1473222394.000016',
-	      team: 'T27FSAC90',
-	      text: 'this is message2',
-	      username: 'brogrammer'
-	    }, { type: 'message',
-	      key: 3,
-	      channel: 'C43214FDSA',
-	      user: 'UASDF@4325FD',
-	      ts: '1473222394.000016',
-	      team: 'T27FSAC90',
-	      text: 'this is message3',
-	      username: 'brogrammer'
-	    }];
 	    return _this;
 	  }
 
+	  // this.dummyData = [
+	  //   {type:'message',
+	  //     key: 1,
+	  //     channel: 'C43214FDSA',
+	  //     user: 'UASDF@4325FD',
+	  //     ts: '1473222394.000016',
+	  //     team: 'T27FSAC90',
+	  //     text: 'this is message1',
+	  //     username: 'brogrammer'
+	  //   },
+	  //   {type:'message',
+	  //     key: 2,
+	  //     channel: 'C43214FDSA',
+	  //     user: 'UASDF@4325FD',
+	  //     ts: '1473222394.000016',
+	  //     team: 'T27FSAC90',
+	  //     text: 'this is message2',
+	  //     username: 'brogrammer'
+	  //   },
+	  //   {type:'message',
+	  //     key: 3,
+	  //     channel: 'C43214FDSA',
+	  //     user: 'UASDF@4325FD',
+	  //     ts: '1473222394.000016',
+	  //     team: 'T27FSAC90',
+	  //     text: 'this is message3',
+	  //     username: 'brogrammer'
+	  //   }
+	  // ];
+
 	  _createClass(App, [{
+	    key: 'refreshFunction',
+	    value: function refreshFunction() {
+	      var self = this;
+	      fetch("/api/messages/", { method: "GET" }).then(function (response) {
+	        return response.json();
+	      }).then(function (data) {
+	        console.log(data);
+	        self.setState({ data: data });
+	      }).catch(function (error) {
+	        console.error(error);
+	      });
+	    }
+	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      var self = this;
@@ -21527,7 +21545,7 @@
 	            null,
 	            'Your team messages'
 	          ),
-	          _react2.default.createElement(_MessagesList2.default, { data: this.state.data })
+	          _react2.default.createElement(_MessagesList2.default, { data: this.state.data, refreshFunction: this.refreshFunction.bind(this) })
 	        );
 	      }
 	      return _react2.default.createElement(
@@ -21560,9 +21578,19 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var MessagesList = function MessagesList(messages) {
+
+	  var refresh = function refresh() {
+	    messages.refreshFunction();
+	  };
+
 	  return React.createElement(
 	    "div",
 	    { className: "message-list" },
+	    React.createElement(
+	      "button",
+	      { onClick: refresh },
+	      "refresh"
+	    ),
 	    messages.data.map(function (message) {
 	      return React.createElement(_Messages2.default, { key: message._id, message: message });
 	    })
@@ -21587,7 +21615,7 @@
 	    React.createElement(
 	      "div",
 	      null,
-	      prop.message.username
+	      prop.message.user
 	    ),
 	    React.createElement(
 	      "div",
