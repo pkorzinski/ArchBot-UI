@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import MessageList from './MessagesList.jsx';
 import Messages from './Messages.jsx';
+import Search from './Search.jsx';
+
+
 
 // bootstrap components are imported from react-bootstrap module
 // https://react-bootstrap.github.io/components.html
@@ -77,6 +80,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    ReactDOM.render(<Search filterFunc={this.filterFunction.bind(this)}/>, document.getElementById('form'))
     var self = this;
     fetch("/api/messages/", { method: "GET" })
     .then((response) =>  response.json())
