@@ -12,7 +12,9 @@ import { Jumbotron } from 'react-bootstrap';
 // bsStyle can be used for bootstrap styles
 const jumbotronInstance = (
   <Jumbotron>
-    <h1 bsClass="jumbo">Welcome to the Dogebot</h1>
+    <span>
+    <h1 className="row text-center jumbo"><img src="/images/fancyDoge.png"/>Such Dashboard Wow<img src="/images/fancyDoge.png"/></h1>
+    </span>
   </Jumbotron>
 )
 
@@ -88,7 +90,7 @@ class App extends React.Component {
       return (
         <div>
           {jumbotronInstance}
-          <h1>Your team messages</h1>
+          <h1>&nbsp;&nbsp;Messages</h1>
           <MessageList data = {this.state.data} refreshFunction = {this.refreshFunction.bind(this)}/>
         </div>
       );
