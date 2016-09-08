@@ -32,13 +32,15 @@ module.exports = function(app) {
   app.post('/api/messages/', function(req, res) {
     // Expect to receive message objects in an array
     var newMessage;
+    var timeStamp;
     for (var i = 0; i < req.body.length; i++) {
+      timeStamp = req.body[i].ts.split('.');
        newMessage = new Message({
         key: req.body[i].ts,
         user: req.body[i].username || 'anonymous',
         text: req.body[i].text || '',
         channel: req.body[i].channel || '',
-        timestamp: req.body[i].ts.split('.')[0]
+        timestamp: new Date(timeStamp[0])
       });
       //console.log('NEWMESSAGE: ',newMessage);
       newMessage.save(function(err, data) {
