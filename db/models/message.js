@@ -1,6 +1,6 @@
 var db = require('../config');
 var MessageSchema = new db.Schema({
-  key: String,
+  key: { type: String, index: { unique: true, dropDups: true } },
   user: String,
   text: String,
   channel: String,
