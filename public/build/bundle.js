@@ -21564,7 +21564,7 @@
 	    "div",
 	    { className: "message-list" },
 	    messages.data.map(function (message) {
-	      return React.createElement(_Messages2.default, { key: message._id, message: message });
+	      return React.createElement(_Messages2.default, { key: message.key, message: message });
 	    })
 	  );
 	}; //Messages list
