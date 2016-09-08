@@ -34,10 +34,11 @@ module.exports = function(app) {
     var newMessage;
     for (var i = 0; i < req.body.length; i++) {
        newMessage = new Message({
+        key: req.body[i].ts,
         user: req.body[i].username || 'anonymous',
         text: req.body[i].text || '',
         channel: req.body[i].channel || '',
-        timestamp: req.body[i].ts || Date.now
+        timestamp: req.body[i].ts
       });
       //console.log('NEWMESSAGE: ',newMessage);
       newMessage.save(function(err, data) {
