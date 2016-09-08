@@ -8,7 +8,7 @@ var findAllMessages = q.nbind(Message.find, Message);
 
 module.exports = function(app) {
   app.get('/api/messages/:username', function(req, res){
-    console.log('CAUGHT BY : ', req.params);
+    //console.log('CAUGHT BY : ', req.params);
     findAllMessages({ user: req.params.username })
       .then(function(messages) {
         res.json(messages);
@@ -39,7 +39,7 @@ module.exports = function(app) {
         channel: req.body[i].channel || '',
         timestamp: req.body[i].ts || Date.now
       });
-      console.log('NEWMESSAGE: ',newMessage);
+      //console.log('NEWMESSAGE: ',newMessage);
       newMessage.save(function(err, data) {
         if(err) {
           console.error(err);

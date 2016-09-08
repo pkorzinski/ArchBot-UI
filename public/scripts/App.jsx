@@ -5,8 +5,10 @@ import Messages from './Messages.jsx';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {data:false};
-    this.data = [];
+    this.state = {
+      hasData: false,
+      data: []
+    };
 
     this.dummyData = [
       {type:'message',
@@ -41,13 +43,15 @@ class App extends React.Component {
 
   componentDidMount() {
     var self = this;
-    fetch("/api/messages", { method: "GET" })
-      .then(function(res){
-        console.log("fetch function called!");
-        console.log(res);
-        self.data = res;
-        self.setState({data:true});
-      });
+    fetch("/api/messages/", { method: "GET" })
+    .then((response) =>  response.json())
+    .then((data) => {
+      console.log(data);
+      self.setState({data: data});
+    })
+    .catch((error) => {
+      console.error(error);
+    });
   }
 
   render(data) {
@@ -55,7 +59,7 @@ class App extends React.Component {
       return (
         <div>
           <h1>Your team messages</h1>
-          <MessageList data = {this.data}/>
+          <MessageList data = {this.state.data}/>
         </div>
       );
     }
