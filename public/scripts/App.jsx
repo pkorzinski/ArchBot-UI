@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import MessageList from './MessagesList.jsx';
-import Messages from './Messages.jsx';
 import Search from './Search.jsx';
 // bootstrap components are imported from react-bootstrap module
 // https://react-bootstrap.github.io/components.html

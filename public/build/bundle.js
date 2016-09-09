@@ -21453,10 +21453,6 @@
 
 	var _MessagesList2 = _interopRequireDefault(_MessagesList);
 
-	var _Messages = __webpack_require__(174);
-
-	var _Messages2 = _interopRequireDefault(_Messages);
-
 	var _Search = __webpack_require__(175);
 
 	var _Search2 = _interopRequireDefault(_Search);
@@ -21599,9 +21595,9 @@
 	  value: true
 	});
 
-	var _Messages = __webpack_require__(174);
+	var _Message = __webpack_require__(174);
 
-	var _Messages2 = _interopRequireDefault(_Messages);
+	var _Message2 = _interopRequireDefault(_Message);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21628,7 +21624,7 @@
 	      "div",
 	      null,
 	      props.data.map(function (message) {
-	        return React.createElement(_Messages2.default, { key: message.key, message: message, getOneUser: props.getOneUser });
+	        return React.createElement(_Message2.default, { key: message.key, message: message, getOneUser: props.getOneUser });
 	      })
 	    )
 	  );

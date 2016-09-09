@@ -1,4 +1,4 @@
-import Message from './Messages.jsx';
+import Message from './Message.jsx';
 
 var MessagesList = (props) => {
 
