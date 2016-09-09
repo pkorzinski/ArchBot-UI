@@ -21453,10 +21453,6 @@
 
 	var _MessagesList2 = _interopRequireDefault(_MessagesList);
 
-	var _Messages = __webpack_require__(174);
-
-	var _Messages2 = _interopRequireDefault(_Messages);
-
 	var _Search = __webpack_require__(175);
 
 	var _Search2 = _interopRequireDefault(_Search);
@@ -21470,7 +21466,6 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 	// bootstrap components are imported from react-bootstrap module
 	// https://react-bootstrap.github.io/components.html
 
@@ -21494,6 +21489,8 @@
 	  )
 	);
 
+	// Only App component is stateful
+
 	var App = function (_React$Component) {
 	  _inherits(App, _React$Component);
 
@@ -21511,41 +21508,18 @@
 	    return _this;
 	  }
 
-	  // this.dummyData = [
-	  //   {type:'message',
-	  //     key: 1,
-	  //     channel: 'C43214FDSA',
-	  //     user: 'UASDF@4325FD',
-	  //     ts: '1473222394.000016',
-	  //     team: 'T27FSAC90',
-	  //     text: 'this is message1',
-	  //     username: 'brogrammer'
-	  //   },
-	  //   {type:'message',
-	  //     key: 2,
-	  //     channel: 'C43214FDSA',
-	  //     user: 'UASDF@4325FD',
-	  //     ts: '1473222394.000016',
-	  //     team: 'T27FSAC90',
-	  //     text: 'this is message2',
-	  //     username: 'brogrammer'
-	  //   },
-	  //   {type:'message',
-	  //     key: 3,
-	  //     channel: 'C43214FDSA',
-	  //     user: 'UASDF@4325FD',
-	  //     ts: '1473222394.000016',
-	  //     team: 'T27FSAC90',
-	  //     text: 'this is message3',
-	  //     username: 'brogrammer'
-	  //   }
-	  // ];
+	  ////// API REQUESTS ////////////////////////////////////////////////////
+
+	  // handles GET for all user is no argument; otherwise GET all users
+
 
 	  _createClass(App, [{
-	    key: 'getOneUser',
-	    value: function getOneUser(username) {
+	    key: 'fetchAPI',
+	    value: function fetchAPI(username) {
+	      // condition for using API with or without adding username
+	      var addUserToUrl = username || "";
 	      var self = this;
-	      fetch("/api/messages/" + username, { method: "GET" }).then(function (response) {
+	      fetch("/api/messages/" + addUserToUrl, { method: "GET" }).then(function (response) {
 	        return response.json();
 	      }).then(function (data) {
 	        console.log(data);
@@ -21554,6 +21528,19 @@
 	        console.error(error);
 	      });
 	    }
+	  }, {
+	    key: 'getOneUser',
+	    value: function getOneUser(username) {
+	      this.fetchAPI(username);
+	    }
+	  }, {
+	    key: 'refreshAllUser',
+	    value: function refreshAllUser() {
+	      this.fetchAPI();
+	    }
+
+	    ////// END API REQUESTS //////////////////////////////////////////////////
+
 	  }, {
 	    key: 'filterFunction',
 	    value: function filterFunction() {
@@ -21571,55 +21558,26 @@
 	      this.setState({ data: filtered });
 	    }
 	  }, {
-	    key: 'refreshFunction',
-	    value: function refreshFunction() {
-	      var self = this;
-	      fetch("/api/messages/", { method: "GET" }).then(function (response) {
-	        return response.json();
-	      }).then(function (data) {
-	        console.log(data);
-	        self.setState({ data: data });
-	      }).catch(function (error) {
-	        console.error(error);
-	      });
-	    }
-	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      // adds Search component to navbar in HTML which is defined outside of React file structure.
 	      _reactDom2.default.render(_react2.default.createElement(_Search2.default, { filterFunc: this.filterFunction.bind(this) }), document.getElementById('form'));
-	      var self = this;
-	      fetch("/api/messages/", { method: "GET" }).then(function (response) {
-	        return response.json();
-	      }).then(function (data) {
-	        console.log(data);
-	        self.setState({ data: data });
-	      }).catch(function (error) {
-	        console.error(error);
-	      });
+	      this.fetchAPI();
 	    }
-
-	    // The bootstrap component instance can be added via handlebars inside of the render return
-
 	  }, {
 	    key: 'render',
 	    value: function render(data) {
-	      if (this.state.data) {
-	        return _react2.default.createElement(
-	          'div',
-	          null,
-	          jumbotronInstance,
-	          _react2.default.createElement(
-	            'h1',
-	            null,
-	            '  Messages'
-	          ),
-	          _react2.default.createElement(_MessagesList2.default, { data: this.state.data, refreshFunction: this.refreshFunction.bind(this), getOneUser: this.getOneUser.bind(this) })
-	        );
-	      }
+	      // The bootstrap component instance can be added via handlebars inside of the render return
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        'no data!'
+	        jumbotronInstance,
+	        _react2.default.createElement(
+	          'h1',
+	          null,
+	          '  Messages'
+	        ),
+	        _react2.default.createElement(_MessagesList2.default, { data: this.state.data, refreshAllUser: this.refreshAllUser.bind(this), getOneUser: this.getOneUser.bind(this) })
 	      );
 	    }
 	  }]);
@@ -21639,16 +21597,16 @@
 	  value: true
 	});
 
-	var _Messages = __webpack_require__(174);
+	var _Message = __webpack_require__(174);
 
-	var _Messages2 = _interopRequireDefault(_Messages);
+	var _Message2 = _interopRequireDefault(_Message);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var MessagesList = function MessagesList(messages) {
+	var MessagesList = function MessagesList(props) {
 
-	  var refresh = function refresh() {
-	    messages.refreshFunction();
+	  var refreshHandler = function refreshHandler() {
+	    props.refreshAllUser();
 	  };
 
 	  var divStyle = {
@@ -21661,18 +21619,19 @@
 	    { className: "message-list" },
 	    React.createElement(
 	      "button",
-	      { style: divStyle, className: "btn btn-primary btn-lg", onClick: refresh },
+	      { style: divStyle, className: "btn btn-primary btn-lg", onClick: refreshHandler },
 	      "Refresh"
 	    ),
 	    React.createElement(
 	      "div",
 	      null,
-	      messages.data.map(function (message) {
-	        return React.createElement(_Messages2.default, { key: message.key, message: message, getOneUser: messages.getOneUser });
+	      props.data.map(function (message) {
+	        return React.createElement(_Message2.default, { key: message.key, message: message, getOneUser: props.getOneUser });
 	      })
 	    )
 	  );
-	}; //Messages list
+	};
+
 	exports.default = MessagesList;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
@@ -21685,14 +21644,21 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var Message = function Message(prop) {
+	var Message = function Message(props) {
 	  var getUser = function getUser(e) {
 	    var username = e.target.text;
-	    prop.getOneUser(username);
+	    props.getOneUser(username);
 	  };
+
+	  // this is the React approach to inline styles
+	  // https://facebook.github.io/react/tips/inline-styles.html
+	  var inlineLinkStyle = {
+	    color: "white"
+	  };
+
 	  return React.createElement(
 	    "div",
-	    { className: "col-sm-4 pull-left" },
+	    { className: "col-sm-4 pull-left message" },
 	    React.createElement(
 	      "div",
 	      { className: "panel panel-primary" },
@@ -21701,17 +21667,17 @@
 	        { className: "panel-heading" },
 	        React.createElement(
 	          "a",
-	          { onClick: getUser },
-	          prop.message.user,
+	          { onClick: getUser, style: inlineLinkStyle },
+	          props.message.user,
 	          " "
 	        ),
 	        "- ",
-	        prop.message.timestamp
+	        props.message.timestamp
 	      ),
 	      React.createElement(
 	        "div",
 	        { className: "panel-body" },
-	        prop.message.text
+	        props.message.text
 	      )
 	    )
 	  );

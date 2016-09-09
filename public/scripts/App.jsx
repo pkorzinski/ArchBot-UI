@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import MessageList from './MessagesList.jsx';
-import Messages from './Messages.jsx';
 import Search from './Search.jsx';
 // bootstrap components are imported from react-bootstrap module
 // https://react-bootstrap.github.io/components.html
@@ -22,6 +21,7 @@ const jumbotronInstance = (
   </Jumbotron>
 )
 
+// Only App component is stateful
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -33,9 +33,14 @@ class App extends React.Component {
 
   }
 
-  getOneUser(username){
+////// API REQUESTS ////////////////////////////////////////////////////
+
+  // handles GET for all user is no argument; otherwise GET all users
+  fetchAPI(username){
+    // condition for using API with or without adding username
+    var addUserToUrl = username || "";
     var self = this;
-    fetch("/api/messages/" + username, { method: "GET" })
+    fetch("/api/messages/" + addUserToUrl, { method: "GET" })
       .then((response) =>  response.json())
       .then((data) => {
         console.log(data);
@@ -45,6 +50,16 @@ class App extends React.Component {
         console.error(error);
       });
   }
+
+  getOneUser(username){
+    this.fetchAPI(username)
+  }
+
+  refreshAllUser() {
+    this.fetchAPI()
+  }
+
+////// END API REQUESTS //////////////////////////////////////////////////
 
   filterFunction() {
     if (this.state.data.length > this.state.unfilteredData.length) {
@@ -61,45 +76,21 @@ class App extends React.Component {
     this.setState({data: filtered})
   }
 
-  refreshFunction() {
-    var self = this;
-    fetch("/api/messages/", { method: "GET" })
-      .then((response) =>  response.json())
-      .then((data) => {
-        console.log(data);
-        self.setState({ data: data });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
   componentDidMount() {
+    // adds Search component to navbar in HTML which is defined outside of React file structure.
     ReactDOM.render(<Search filterFunc={ this.filterFunction.bind(this) }/>, document.getElementById('form'))
-    var self = this;
-    fetch("/api/messages/", { method: "GET" })
-      .then((response) =>  response.json())
-      .then((data) => {
-        console.log(data);
-        self.setState({ data: data });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    this.fetchAPI()
   }
 
-  // The bootstrap component instance can be added via handlebars inside of the render return
   render(data) {
-    if (this.state.data){
+      // The bootstrap component instance can be added via handlebars inside of the render return
       return (
         <div>
           { jumbotronInstance }
           <h1>&nbsp;&nbsp;Messages</h1>
-          <MessageList data = { this.state.data } refreshFunction = { this.refreshFunction.bind(this) } getOneUser={ this.getOneUser.bind(this) }/>
+          <MessageList data = { this.state.data } refreshAllUser = { this.refreshAllUser.bind(this) } getOneUser={ this.getOneUser.bind(this) }/>
         </div>
       );
-    }
-    return (<div>no data!</div>)
   }
 }
 
