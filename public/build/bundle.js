@@ -21489,6 +21489,8 @@
 	  )
 	);
 
+	// Only App component is stateful
+
 	var App = function (_React$Component) {
 	  _inherits(App, _React$Component);
 
@@ -21505,6 +21507,11 @@
 
 	    return _this;
 	  }
+
+	  ////// API REQUESTS ////////////////////////////////////////////////////
+
+	  // handles GET for all user is no argument; otherwise GET all users
+
 
 	  _createClass(App, [{
 	    key: 'fetchAPI',
@@ -21527,6 +21534,14 @@
 	      this.fetchAPI(username);
 	    }
 	  }, {
+	    key: 'refreshAllUser',
+	    value: function refreshAllUser() {
+	      this.fetchAPI();
+	    }
+
+	    ////// END API REQUESTS //////////////////////////////////////////////////
+
+	  }, {
 	    key: 'filterFunction',
 	    value: function filterFunction() {
 	      if (this.state.data.length > this.state.unfilteredData.length) {
@@ -21543,39 +21558,26 @@
 	      this.setState({ data: filtered });
 	    }
 	  }, {
-	    key: 'refreshFunction',
-	    value: function refreshFunction() {
-	      this.fetchAPI();
-	    }
-	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      // adds Search component to navbar in HTML which is defined outside of React file structure.
 	      _reactDom2.default.render(_react2.default.createElement(_Search2.default, { filterFunc: this.filterFunction.bind(this) }), document.getElementById('form'));
 	      this.fetchAPI();
 	    }
-
-	    // The bootstrap component instance can be added via handlebars inside of the render return
-
 	  }, {
 	    key: 'render',
 	    value: function render(data) {
-	      if (this.state.data) {
-	        return _react2.default.createElement(
-	          'div',
-	          null,
-	          jumbotronInstance,
-	          _react2.default.createElement(
-	            'h1',
-	            null,
-	            '  Messages'
-	          ),
-	          _react2.default.createElement(_MessagesList2.default, { data: this.state.data, refreshFunction: this.refreshFunction.bind(this), getOneUser: this.getOneUser.bind(this) })
-	        );
-	      }
+	      // The bootstrap component instance can be added via handlebars inside of the render return
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        'no data!'
+	        jumbotronInstance,
+	        _react2.default.createElement(
+	          'h1',
+	          null,
+	          '  Messages'
+	        ),
+	        _react2.default.createElement(_MessagesList2.default, { data: this.state.data, refreshAllUser: this.refreshAllUser.bind(this), getOneUser: this.getOneUser.bind(this) })
 	      );
 	    }
 	  }]);
@@ -21603,8 +21605,8 @@
 
 	var MessagesList = function MessagesList(props) {
 
-	  var refresh = function refresh() {
-	    props.refreshFunction();
+	  var refreshHandler = function refreshHandler() {
+	    props.refreshAllUser();
 	  };
 
 	  var divStyle = {
@@ -21617,7 +21619,7 @@
 	    { className: "message-list" },
 	    React.createElement(
 	      "button",
-	      { style: divStyle, className: "btn btn-primary btn-lg", onClick: refresh },
+	      { style: divStyle, className: "btn btn-primary btn-lg", onClick: refreshHandler },
 	      "Refresh"
 	    ),
 	    React.createElement(
@@ -21648,9 +21650,15 @@
 	    props.getOneUser(username);
 	  };
 
+	  // this is the React approach to inline styles
+	  // https://facebook.github.io/react/tips/inline-styles.html
+	  var inlineLinkStyle = {
+	    color: "white"
+	  };
+
 	  return React.createElement(
 	    "div",
-	    { className: "col-sm-4 pull-left" },
+	    { className: "col-sm-4 pull-left message" },
 	    React.createElement(
 	      "div",
 	      { className: "panel panel-primary" },
@@ -21659,7 +21667,7 @@
 	        { className: "panel-heading" },
 	        React.createElement(
 	          "a",
-	          { onClick: getUser },
+	          { onClick: getUser, style: inlineLinkStyle },
 	          props.message.user,
 	          " "
 	        ),

@@ -21,6 +21,7 @@ const jumbotronInstance = (
   </Jumbotron>
 )
 
+// Only App component is stateful
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -32,6 +33,9 @@ class App extends React.Component {
 
   }
 
+////// API REQUESTS ////////////////////////////////////////////////////
+
+  // handles GET for all user is no argument; otherwise GET all users
   fetchAPI(username){
     // condition for using API with or without adding username
     var addUserToUrl = username || "";
@@ -51,6 +55,12 @@ class App extends React.Component {
     this.fetchAPI(username)
   }
 
+  refreshAllUser() {
+    this.fetchAPI()
+  }
+
+////// END API REQUESTS //////////////////////////////////////////////////
+
   filterFunction() {
     if (this.state.data.length > this.state.unfilteredData.length) {
       this.state.unfilteredData = this.state.data.slice(0)
@@ -66,27 +76,21 @@ class App extends React.Component {
     this.setState({data: filtered})
   }
 
-  refreshFunction() {
-    this.fetchAPI()
-  }
-
   componentDidMount() {
+    // adds Search component to navbar in HTML which is defined outside of React file structure.
     ReactDOM.render(<Search filterFunc={ this.filterFunction.bind(this) }/>, document.getElementById('form'))
     this.fetchAPI()
   }
 
-  // The bootstrap component instance can be added via handlebars inside of the render return
   render(data) {
-    if (this.state.data){
+      // The bootstrap component instance can be added via handlebars inside of the render return
       return (
         <div>
           { jumbotronInstance }
           <h1>&nbsp;&nbsp;Messages</h1>
-          <MessageList data = { this.state.data } refreshFunction = { this.refreshFunction.bind(this) } getOneUser={ this.getOneUser.bind(this) }/>
+          <MessageList data = { this.state.data } refreshAllUser = { this.refreshAllUser.bind(this) } getOneUser={ this.getOneUser.bind(this) }/>
         </div>
       );
-    }
-    return (<div>no data!</div>)
   }
 }
 

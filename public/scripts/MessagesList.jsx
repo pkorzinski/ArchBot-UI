@@ -2,8 +2,8 @@ import Message from './Message.jsx';
 
 var MessagesList = (props) => {
 
-  var refresh = function(){
-    props.refreshFunction();
+  var refreshHandler = function(){
+    props.refreshAllUser();
   };
 
   var divStyle = {
@@ -13,7 +13,7 @@ var MessagesList = (props) => {
 
   return (
     <div className="message-list">
-      <button style={divStyle} className="btn btn-primary btn-lg" onClick={ refresh }>
+      <button style={divStyle} className="btn btn-primary btn-lg" onClick={ refreshHandler }>
         Refresh
       </button>
       <div>
