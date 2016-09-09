@@ -1,9 +1,9 @@
 import Message from './Messages.jsx';
 
-var MessagesList = (messages) => {
+var MessagesList = (props) => {
 
   var refresh = function(){
-    messages.refreshFunction();
+    props.refreshFunction();
   };
 
   var divStyle = {
@@ -17,8 +17,8 @@ var MessagesList = (messages) => {
         Refresh
       </button>
       <div>
-      { messages.data.map(function(message) {
-        return <Message key={ message.key } message={ message } getOneUser={ messages.getOneUser }/>
+      { props.data.map(function(message) {
+        return <Message key={ message.key } message={ message } getOneUser={ props.getOneUser }/>
       })}
       </div>
     </div>

@@ -21605,10 +21605,10 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var MessagesList = function MessagesList(messages) {
+	var MessagesList = function MessagesList(props) {
 
 	  var refresh = function refresh() {
-	    messages.refreshFunction();
+	    props.refreshFunction();
 	  };
 
 	  var divStyle = {
@@ -21627,8 +21627,8 @@
 	    React.createElement(
 	      "div",
 	      null,
-	      messages.data.map(function (message) {
-	        return React.createElement(_Messages2.default, { key: message.key, message: message, getOneUser: messages.getOneUser });
+	      props.data.map(function (message) {
+	        return React.createElement(_Messages2.default, { key: message.key, message: message, getOneUser: props.getOneUser });
 	      })
 	    )
 	  );
@@ -21646,10 +21646,10 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var Message = function Message(prop) {
+	var Message = function Message(props) {
 	  var getUser = function getUser(e) {
 	    var username = e.target.text;
-	    prop.getOneUser(username);
+	    props.getOneUser(username);
 	  };
 
 	  return React.createElement(
@@ -21664,16 +21664,16 @@
 	        React.createElement(
 	          "a",
 	          { onClick: getUser },
-	          prop.message.user,
+	          props.message.user,
 	          " "
 	        ),
 	        "- ",
-	        prop.message.timestamp
+	        props.message.timestamp
 	      ),
 	      React.createElement(
 	        "div",
 	        { className: "panel-body" },
-	        prop.message.text
+	        props.message.text
 	      )
 	    )
 	  );
