@@ -9,7 +9,7 @@
   <title>DogeBot Over9000</title>
 </head>
 
-<body>
+<body id="body">
   <nav class="navbar navbar-fixed-top navbar-inverse">
     <div class="navbar-header">
       <a class="navbar-brand" href="/">DogeBot >9000</a>
@@ -27,6 +27,14 @@
   <div style="margin-top: 50px" id='jumbotron'></div>
   <div id="DogeBotApp"></div>
   <script src="/build/bundle.js"></script>
+  <script>
+    document.body.innerHTML +=
+      '<a href="http://hackreactor.com/remote-beta"> \
+      <img style="position: fixed; top: 51px; right: 0; border: 0;" \
+      src="http://i.imgur.com/x86kKmF.png" \
+      alt="Built at Hack Reactor Remote"> \
+      </a>';
+  </script>
 </body>
 
 </html>
