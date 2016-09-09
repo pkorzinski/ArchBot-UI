@@ -62,6 +62,19 @@ class App extends React.Component {
     //   }
     // ];
 
+  getOneUser(username){
+    var self = this;
+    fetch("/api/messages/" + username, { method: "GET" })
+    .then((response) =>  response.json())
+    .then((data) => {
+      console.log(data);
+      self.setState({data: data});
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }
+
   filterFunction() {
     if (this.state.data.length > this.state.unfilteredData.length) {
       this.state.unfilteredData = this.state.data.slice(0)
@@ -111,7 +124,7 @@ class App extends React.Component {
         <div>
           {jumbotronInstance}
           <h1>&nbsp;&nbsp;Messages</h1>
-          <MessageList data = {this.state.data} refreshFunction = {this.refreshFunction.bind(this)}/>
+          <MessageList data = {this.state.data} refreshFunction = {this.refreshFunction.bind(this)} getOneUser={this.getOneUser.bind(this)}/>
         </div>
       );
     }
