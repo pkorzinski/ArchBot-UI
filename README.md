@@ -1,6 +1,6 @@
 # Project Name
 
-> DogeBot 9000 - So Project Much Wow
+> DogeBot Over9000 - So Project Much Wow
 
 ## Team
 
@@ -26,13 +26,26 @@
 ## Requirements
 
 - Node 6.2.2
-- Express 4.5.1
+- Express 4.14.0
 - body-parser 1.15.2
 - method-override 2.0.2
 - bower 1.7.9
 - Q 1.4.1
 - Mongoose 4.1.0
 - React 15.3.1
+- Add rest of reqs.
+- babel-core 6.14.0
+- babel-loader 6.2.5
+- babel-preset-es2015 6.14.0
+- babel-preset-react 6.11.1
+- chai 3.5.0
+- ejs 2.5.1
+- mocha 3.0.2
+- react-bootstrap 0.30.3
+- react-dom 15.3.1
+- webpack 1.13.2
+- webpack-dev-server 1.15.1
+
 
 ## Development
 
