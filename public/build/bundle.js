@@ -21542,6 +21542,19 @@
 	  // ];
 
 	  _createClass(App, [{
+	    key: 'getOneUser',
+	    value: function getOneUser(username) {
+	      var self = this;
+	      fetch("/api/messages/" + username, { method: "GET" }).then(function (response) {
+	        return response.json();
+	      }).then(function (data) {
+	        console.log(data);
+	        self.setState({ data: data });
+	      }).catch(function (error) {
+	        console.error(error);
+	      });
+	    }
+	  }, {
 	    key: 'filterFunction',
 	    value: function filterFunction() {
 	      if (this.state.data.length > this.state.unfilteredData.length) {
@@ -21600,7 +21613,7 @@
 	            null,
 	            '  Messages'
 	          ),
-	          _react2.default.createElement(_MessagesList2.default, { data: this.state.data, refreshFunction: this.refreshFunction.bind(this) })
+	          _react2.default.createElement(_MessagesList2.default, { data: this.state.data, refreshFunction: this.refreshFunction.bind(this), getOneUser: this.getOneUser.bind(this) })
 	        );
 	      }
 	      return _react2.default.createElement(
@@ -21673,6 +21686,10 @@
 	  value: true
 	});
 	var Message = function Message(prop) {
+	  var getUser = function getUser(e) {
+	    var username = e.target.text;
+	    prop.getOneUser(username);
+	  };
 	  return React.createElement(
 	    "div",
 	    { className: "col-sm-4 pull-left" },
@@ -21682,8 +21699,13 @@
 	      React.createElement(
 	        "div",
 	        { className: "panel-heading" },
-	        prop.message.user,
-	        " - ",
+	        React.createElement(
+	          "a",
+	          { onClick: getUser },
+	          prop.message.user,
+	          " "
+	        ),
+	        "- ",
 	        prop.message.timestamp
 	      ),
 	      React.createElement(
