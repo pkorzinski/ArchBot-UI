@@ -19,7 +19,7 @@ var MessagesList = (messages) => {
       </button>
       <div>
       {messages.data.map(function(message){
-        return <Message key={message._id} message={message}/>
+        return <Message key={message.key} message={message} getOneUser={messages.getOneUser}/>
       })}
       </div>
     </div>
