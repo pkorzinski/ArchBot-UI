@@ -1,11 +1,10 @@
-//Messages list
 import Message from './Messages.jsx';
 
 var MessagesList = (messages) => {
 
   var refresh = function(){
     messages.refreshFunction();
-  }
+  };
 
   var divStyle = {
     margin: "20px",
@@ -14,12 +13,12 @@ var MessagesList = (messages) => {
 
   return (
     <div className="message-list">
-      <button style={divStyle} className="btn btn-primary btn-lg" onClick={refresh}>
+      <button style={divStyle} className="btn btn-primary btn-lg" onClick={ refresh }>
         Refresh
       </button>
       <div>
-      {messages.data.map(function(message){
-        return <Message key={message.key} message={message} getOneUser={messages.getOneUser}/>
+      { messages.data.map(function(message) {
+        return <Message key={ message.key } message={ message } getOneUser={ messages.getOneUser }/>
       })}
       </div>
     </div>
