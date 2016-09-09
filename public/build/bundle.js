@@ -21470,7 +21470,6 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 	// bootstrap components are imported from react-bootstrap module
 	// https://react-bootstrap.github.io/components.html
 
@@ -21511,41 +21510,13 @@
 	    return _this;
 	  }
 
-	  // this.dummyData = [
-	  //   {type:'message',
-	  //     key: 1,
-	  //     channel: 'C43214FDSA',
-	  //     user: 'UASDF@4325FD',
-	  //     ts: '1473222394.000016',
-	  //     team: 'T27FSAC90',
-	  //     text: 'this is message1',
-	  //     username: 'brogrammer'
-	  //   },
-	  //   {type:'message',
-	  //     key: 2,
-	  //     channel: 'C43214FDSA',
-	  //     user: 'UASDF@4325FD',
-	  //     ts: '1473222394.000016',
-	  //     team: 'T27FSAC90',
-	  //     text: 'this is message2',
-	  //     username: 'brogrammer'
-	  //   },
-	  //   {type:'message',
-	  //     key: 3,
-	  //     channel: 'C43214FDSA',
-	  //     user: 'UASDF@4325FD',
-	  //     ts: '1473222394.000016',
-	  //     team: 'T27FSAC90',
-	  //     text: 'this is message3',
-	  //     username: 'brogrammer'
-	  //   }
-	  // ];
-
 	  _createClass(App, [{
-	    key: 'getOneUser',
-	    value: function getOneUser(username) {
+	    key: 'fetchAPI',
+	    value: function fetchAPI(username) {
+	      // condition for using API with or without adding username
+	      var addUserToUrl = username || "";
 	      var self = this;
-	      fetch("/api/messages/" + username, { method: "GET" }).then(function (response) {
+	      fetch("/api/messages/" + addUserToUrl, { method: "GET" }).then(function (response) {
 	        return response.json();
 	      }).then(function (data) {
 	        console.log(data);
@@ -21553,6 +21524,11 @@
 	      }).catch(function (error) {
 	        console.error(error);
 	      });
+	    }
+	  }, {
+	    key: 'getOneUser',
+	    value: function getOneUser(username) {
+	      this.fetchAPI(username);
 	    }
 	  }, {
 	    key: 'filterFunction',
@@ -21573,29 +21549,13 @@
 	  }, {
 	    key: 'refreshFunction',
 	    value: function refreshFunction() {
-	      var self = this;
-	      fetch("/api/messages/", { method: "GET" }).then(function (response) {
-	        return response.json();
-	      }).then(function (data) {
-	        console.log(data);
-	        self.setState({ data: data });
-	      }).catch(function (error) {
-	        console.error(error);
-	      });
+	      this.fetchAPI();
 	    }
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      _reactDom2.default.render(_react2.default.createElement(_Search2.default, { filterFunc: this.filterFunction.bind(this) }), document.getElementById('form'));
-	      var self = this;
-	      fetch("/api/messages/", { method: "GET" }).then(function (response) {
-	        return response.json();
-	      }).then(function (data) {
-	        console.log(data);
-	        self.setState({ data: data });
-	      }).catch(function (error) {
-	        console.error(error);
-	      });
+	      this.fetchAPI();
 	    }
 
 	    // The bootstrap component instance can be added via handlebars inside of the render return
@@ -21672,7 +21632,8 @@
 	      })
 	    )
 	  );
-	}; //Messages list
+	};
+
 	exports.default = MessagesList;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
@@ -21690,6 +21651,7 @@
 	    var username = e.target.text;
 	    prop.getOneUser(username);
 	  };
+
 	  return React.createElement(
 	    "div",
 	    { className: "col-sm-4 pull-left" },

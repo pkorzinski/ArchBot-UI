@@ -33,9 +33,11 @@ class App extends React.Component {
 
   }
 
-  getOneUser(username){
+  fetchAPI(username){
+    // condition for using API with or without adding username
+    var addUserToUrl = username || "";
     var self = this;
-    fetch("/api/messages/" + username, { method: "GET" })
+    fetch("/api/messages/" + addUserToUrl, { method: "GET" })
       .then((response) =>  response.json())
       .then((data) => {
         console.log(data);
@@ -44,6 +46,10 @@ class App extends React.Component {
       .catch((error) => {
         console.error(error);
       });
+  }
+
+  getOneUser(username){
+    this.fetchAPI(username)
   }
 
   filterFunction() {
@@ -62,30 +68,12 @@ class App extends React.Component {
   }
 
   refreshFunction() {
-    var self = this;
-    fetch("/api/messages/", { method: "GET" })
-      .then((response) =>  response.json())
-      .then((data) => {
-        console.log(data);
-        self.setState({ data: data });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    this.fetchAPI()
   }
 
   componentDidMount() {
     ReactDOM.render(<Search filterFunc={ this.filterFunction.bind(this) }/>, document.getElementById('form'))
-    var self = this;
-    fetch("/api/messages/", { method: "GET" })
-      .then((response) =>  response.json())
-      .then((data) => {
-        console.log(data);
-        self.setState({ data: data });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    this.fetchAPI()
   }
 
   // The bootstrap component instance can be added via handlebars inside of the render return
