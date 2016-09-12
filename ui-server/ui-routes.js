@@ -56,13 +56,13 @@ module.exports = function(app) {
     res.end();
   });
 
+  // Route for authentication of team to allow access to a team's messages.
   app.post('/api/teams', function(req, res) {
     var teamCode = req.body.team;
-    console.log(teamCode);
     findTeam({key: teamCode})
       .then(function(found) {
         if (found) {
-          res.send(JSON.stringify(found.password));
+          res.send(JSON.stringify(found));
         } else {
           var password = bcrypt.genSaltSync(10).slice(7, 15);
           Team.create({
@@ -70,7 +70,7 @@ module.exports = function(app) {
             password: password
           })
             .then(function(found) {
-              res.send(JSON.stringify(found.password));
+              res.send(JSON.stringify(found));
             });
         }
       });
