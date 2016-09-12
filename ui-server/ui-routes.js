@@ -20,6 +20,18 @@ module.exports = function(app) {
       });
   });
 
+  app.post('/api/login/', function(req, res){
+    var tc = req.body.teamCode;
+    var pass = req.body.password;
+    console.log('body received', tc, pass)
+    // check db for valid teamcode/password
+
+    // temporary truth below
+    var obj = {auth: true}
+    console.log(obj)
+    res.send(JSON.stringify(obj))
+  })
+
   app.get('/api/messages/', function(req, res) {
     console.log('Retrieving all messages from database.');
     findAllMessages({})
