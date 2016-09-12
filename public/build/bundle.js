@@ -21662,7 +21662,7 @@
 	          });
 	        } else {
 	          console.log('INSIDE ELSE', self.state.teamCode);
-	          fetch("/api/messages/team/" + self.state.teamCode, { method: "GET" }).then(function (response) {
+	          fetch("/api/messages/" + self.state.teamCode, { method: "GET" }).then(function (response) {
 	            return response.json();
 	          }).then(function (data) {
 	            console.log(data);

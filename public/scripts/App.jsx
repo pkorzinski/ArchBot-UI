@@ -57,7 +57,7 @@ class App extends React.Component {
           });
       } else {
         console.log('INSIDE ELSE', self.state.teamCode);
-        fetch("/api/messages/team/" + self.state.teamCode, { method: "GET" })
+        fetch("/api/messages/" + self.state.teamCode, { method: "GET" })
           .then((response) =>  response.json())
           .then((data) => {
             console.log(data);

@@ -26,7 +26,7 @@ module.exports = function(app) {
       });
   });
 
-  app.get('/api/messages/team/:teamCode', function(req, res) {
+  app.get('/api/messages/:teamCode', function(req, res) {
     console.log('TEAMCODE GET', req.params.teamCode);
     findAllMessages({ team: req.params.teamCode })
       .then(function(messages) {
