@@ -28,7 +28,8 @@ class App extends React.Component {
     this.state = {
       hasData: false,
       data: [],
-      unfilteredData: []
+      unfilteredData: [],
+      teamCode: props.teamCode
     };
 
   }
@@ -40,15 +41,29 @@ class App extends React.Component {
     // condition for using API with or without adding username
     var addUserToUrl = username || "";
     var self = this;
-    fetch("/api/messages/" + addUserToUrl, { method: "GET" })
-      .then((response) =>  response.json())
-      .then((data) => {
-        console.log(data);
-        self.setState({ data: data });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    if (self.state.teamCode) {
+      if (addUserToUrl) {
+        fetch('api/messages/' + self.state.teamCode + '/' + addUserToUrl , { method: 'GET' })
+          .then((response) =>  response.json())
+          .then((data) => {
+            console.log(data);
+            self.setState({ data: data });
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else {
+        fetch("/api/messages/team/" + self.state.teamCode, { method: "GET" })
+          .then((response) =>  response.json())
+          .then((data) => {
+            console.log(data);
+            self.setState({ data: data });
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+    }
   }
 
   getOneUser(username){
