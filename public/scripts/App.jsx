@@ -43,17 +43,17 @@ class App extends React.Component {
     var self = this;
 
     if (self.state.teamCode) {
-      if (addUserToUrl) {
-        fetch('api/messages/' + self.state.teamCode + '/' + addUserToUrl , { method: 'GET' })
-          .then((response) =>  response.json())
-          .then((data) => {
-            console.log(data);
-            self.setState({ data: data });
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      } else {
+      // if (addUserToUrl) {
+      //   fetch('api/messages/' + self.state.teamCode + '/' + addUserToUrl , { method: 'GET' })
+      //     .then((response) =>  response.json())
+      //     .then((data) => {
+      //       console.log(data);
+      //       self.setState({ data: data });
+      //     })
+      //     .catch((error) => {
+      //       console.error(error);
+      //     });
+      // } else {
         console.log('INSIDE ELSE', self.state.teamCode);
         fetch("/api/messages/team/" + self.state.teamCode, { method: "GET" })
           .then((response) =>  response.json())
@@ -64,7 +64,7 @@ class App extends React.Component {
           .catch((error) => {
             console.error(error);
           });
-      }
+      //}
     }
   }
 
