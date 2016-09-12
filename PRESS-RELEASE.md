@@ -32,7 +32,7 @@ Once the project moves into development, the press release can be used as a touc
   > After being invited to your Slack channel, DogeBot quietly saves and stores your messages in an easily accessible and searchable website for your convenience. The website requires a login and password that is provided from Dogebot via a custom Slack command.
 
 ## Quote from You ##
-  > "Finally Michael Jordan will stop claiming I'm misquoting him." - Patrik K., Scrum Master
+  > "Finally, Michael Jordan will stop claiming I'm misquoting him." - Patrik K., Scrum Master
 
 ## How to Get Started ##
   > Download our DogeBot and client/server repositories and push each to its own Heroku account (or use ours!). Invite DogeBot to a Slack channel and watch as messages are stored effortlessly in the client app. Tell Dogebot "Dogebot give me a password!" to access your message archieve on the client. Built with MR NEWB -- MongoDB, React, Node, Express, Webpack and Bootstrap.
