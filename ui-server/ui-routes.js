@@ -1,6 +1,8 @@
 var Message = require('../db/models/message');
+var Team = require('../db/models/team');
 var path = require('path');
 var q = require('q');
+var bcrypt = require('bcrypt');
 
 var findMessage = q.nbind(Message.findOne, Message);
 var createMessage = q.nbind(Message.create, Message);
@@ -39,7 +41,8 @@ module.exports = function(app) {
         user: req.body[i].username || 'anonymous',
         text: req.body[i].text || '',
         channel: req.body[i].channel || '',
-        timestamp: new Date(timeStamp[0] * 1000)
+        timestamp: new Date(timeStamp[0] * 1000),
+        team: req.body[i].team
       });
       newMessage.save(function(err, data) {
         if(err) {
@@ -50,6 +53,28 @@ module.exports = function(app) {
       });
     }
     res.end();
+  });
+
+  app.post('/api/teams', function(req, res) {
+    var teamCode = req.body.team;
+    Team.findOne({key: teamCode})
+      .then(function(err, result) {
+        if (err) {
+          console.error(err);
+        } else {
+          res.send(result.password);
+        }
+      })
+      .fail(function() {
+        var password = bcrypt.genSaltSync(10).slice(0, 7);
+        Team.create({
+          key: teamCode,
+          password: password
+        })
+        .then(function(err, result) {
+          res.send(result.password);
+        });
+      });
   });
 
   app.get('*', function(req, res) {

@@ -5,7 +5,8 @@ var MessageSchema = new db.Schema({
   user: String,
   text: String,
   channel: String,
-  timestamp: String
+  timestamp: String,
+  team: String
 });
 var Message = db.model('Message', MessageSchema);
 
