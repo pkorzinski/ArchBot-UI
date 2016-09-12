@@ -21532,23 +21532,40 @@
 	        // user has not logged in yet
 	        return _react2.default.createElement(
 	          'div',
-	          null,
+	          { className: 'login panel col-sm-4 col-sm-offset-4' },
 	          _react2.default.createElement(
-	            'label',
-	            null,
-	            'Team Code: '
+	            'div',
+	            { className: 'panel-heading' },
+	            _react2.default.createElement(
+	              'h3',
+	              null,
+	              'Login'
+	            )
 	          ),
-	          _react2.default.createElement('input', { onChange: this.teamcodeHandler.bind(this), placeholder: 'Enter Team Code' }),
 	          _react2.default.createElement(
-	            'label',
-	            null,
-	            'Password: '
+	            'div',
+	            { className: 'panel-body' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Team Code: '
+	            ),
+	            _react2.default.createElement('input', { onChange: this.teamcodeHandler.bind(this), placeholder: 'Enter Team Code' })
 	          ),
-	          _react2.default.createElement('input', { onChange: this.passwordHandler.bind(this), placeholder: 'Enter Password' }),
 	          _react2.default.createElement(
-	            'button',
-	            { onClick: this.loginHandler.bind(this) },
-	            'Login'
+	            'div',
+	            { className: 'panel-body' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Password: '
+	            ),
+	            _react2.default.createElement('input', { onChange: this.passwordHandler.bind(this), placeholder: 'Enter Password' }),
+	            _react2.default.createElement(
+	              'button',
+	              { onClick: this.loginHandler.bind(this) },
+	              'Login'
+	            )
 	          )
 	        );
 	      }
