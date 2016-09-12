@@ -43,14 +43,16 @@ module.exports = function(app) {
       findTeam({ team: tc })
         .then(function(found) {
           console.log('FOUND: ', found);
-          // if (found) {
-          //   if (found.password === pass) {
-          //     var obj = {auth: true};
-          //     res.send(JSON.stringify(obj));
-          //   }
-          // } else {
-          //   res.status(403).send({ auth: false });
-          // }
+          if (!found) {
+            res.status(403).send({ auth: false });
+          } else {
+            if (found.password === pass) {
+              var obj = {auth: true};
+              res.send(JSON.stringify(obj));
+            } else {
+              res.status(403).send({ auth: false });
+            }
+          }
         });
   });
 
