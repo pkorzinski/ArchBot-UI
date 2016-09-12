@@ -7,6 +7,7 @@ var bcrypt = require('bcrypt');
 var findMessage = q.nbind(Message.findOne, Message);
 var createMessage = q.nbind(Message.create, Message);
 var findAllMessages = q.nbind(Message.find, Message);
+var findTeam = q.nbind(Team.findOne, Team);
 
 module.exports = function(app) {
   app.get('/api/messages/:username', function(req, res){
@@ -57,23 +58,21 @@ module.exports = function(app) {
 
   app.post('/api/teams', function(req, res) {
     var teamCode = req.body.team;
-    Team.findOne({key: teamCode})
-      .then(function(err, result) {
-        if (err) {
-          console.error(err);
+    console.log(teamCode);
+    findTeam({key: teamCode})
+      .then(function(found) {
+        if (found) {
+          res.send(JSON.stringify(found.password));
         } else {
-          res.send(result.password);
+          var password = bcrypt.genSaltSync(10).slice(7, 15);
+          Team.create({
+            key: teamCode,
+            password: password
+          })
+            .then(function(found) {
+              res.send(JSON.stringify(found.password));
+            });
         }
-      })
-      .fail(function() {
-        var password = bcrypt.genSaltSync(10).slice(0, 7);
-        Team.create({
-          key: teamCode,
-          password: password
-        })
-        .then(function(err, result) {
-          res.send(result.password);
-        });
       });
   });
 
