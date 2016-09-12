@@ -41,6 +41,7 @@ class App extends React.Component {
     // condition for using API with or without adding username
     var addUserToUrl = username || "";
     var self = this;
+
     if (self.state.teamCode) {
       if (addUserToUrl) {
         fetch('api/messages/' + self.state.teamCode + '/' + addUserToUrl , { method: 'GET' })
@@ -53,6 +54,7 @@ class App extends React.Component {
             console.error(error);
           });
       } else {
+        console.log('INSIDE ELSE', self.state.teamCode);
         fetch("/api/messages/team/" + self.state.teamCode, { method: "GET" })
           .then((response) =>  response.json())
           .then((data) => {
