@@ -4,14 +4,20 @@ var path = require('path');
 var q = require('q');
 var bcrypt = require('bcrypt');
 
-var findMessage = q.nbind(Message.findOne, Message);
-var createMessage = q.nbind(Message.create, Message);
+// Promisified database access methods
+// var findMessage = q.nbind(Message.findOne, Message);
+// var createMessage = q.nbind(Message.create, Message);
 var findAllMessages = q.nbind(Message.find, Message);
 var findTeam = q.nbind(Team.findOne, Team);
 
 module.exports = function(app) {
-  app.get('/api/messages/:username', function(req, res){
-    findAllMessages({ user: req.params.username })
+
+  // Needs to check for session auth or other auth to release messages by username
+  app.get('/api/messages/:team/:username', function(req, res) {
+    findAllMessages({
+      user: req.params.username,
+      team: req.params.team
+    })
       .then(function(messages) {
         res.json(messages);
       })
@@ -20,17 +26,35 @@ module.exports = function(app) {
       });
   });
 
-  app.post('/api/login/', function(req, res){
+  app.get('/api/messages/team/:teamCode', function(req, res) {
+    findAllMessages({ team: req.params.teamCode })
+      .then(function(messages) {
+        res.json(messages);
+      })
+      .fail(function(err) {
+        res.status(500).send(err);
+      });
+  });
+
+  app.post('/api/login/', function(req, res) {
     var tc = req.body.teamCode;
     var pass = req.body.password;
-    console.log('body received', tc, pass)
-    // check db for valid teamcode/password
-
-    // temporary truth below
-    var obj = {auth: true}
-    console.log(obj)
-    res.send(JSON.stringify(obj))
-  })
+    console.log('body received', tc, pass);
+      findTeam({ team: tc })
+        .then(function(found) {
+          console.log('FOUND: ', found);
+          if (!found) {
+            res.status(403).send({ auth: false });
+          } else {
+            if (found.password === pass) {
+              var obj = {auth: true};
+              res.send(JSON.stringify(obj));
+            } else {
+              res.status(403).send({ auth: false });
+            }
+          }
+        });
+  });
 
   app.get('/api/messages/', function(req, res) {
     console.log('Retrieving all messages from database.');
@@ -71,14 +95,15 @@ module.exports = function(app) {
   // Route for authentication of team to allow access to a team's messages.
   app.post('/api/teams', function(req, res) {
     var teamCode = req.body.team;
-    findTeam({key: teamCode})
+    findTeam({ team: teamCode })
       .then(function(found) {
         if (found) {
           res.send(JSON.stringify(found));
         } else {
           var password = bcrypt.genSaltSync(10).slice(7, 15);
           Team.create({
-            key: teamCode,
+            key: req.body.ts,
+            team: teamCode,
             password: password
           })
             .then(function(found) {
