@@ -54,6 +54,8 @@ module.exports = function(app) {
         });
   });
 
+  // testing comments.
+
   app.get('/api/messages/', function(req, res) {
     console.log('Retrieving all messages from database.');
     findAllMessages({})
