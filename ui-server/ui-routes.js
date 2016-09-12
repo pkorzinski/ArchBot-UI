@@ -27,8 +27,10 @@ module.exports = function(app) {
   });
 
   app.get('/api/messages/team/:teamCode', function(req, res) {
+    console.log('TEAMCODE GET', req.params.teamCode);
     findAllMessages({ team: req.params.teamCode })
       .then(function(messages) {
+        console.log('INSIDE THEN', messages);
         res.json(messages);
       })
       .fail(function(err) {
