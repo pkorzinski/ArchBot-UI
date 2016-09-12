@@ -6,7 +6,9 @@ var path = require('path');
 var app = express();
 var port = process.env.PORT || 4568;
 
-app.set('view engine', 'ejs');
+// Decided not to use ejs view engine at this point in the project.
+// app.set('view engine', 'ejs');
+
 app.use(bodyParser.json());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 app.use(bodyParser.urlencoded({ extended: true }));
