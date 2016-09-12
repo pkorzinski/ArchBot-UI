@@ -57,12 +57,17 @@ class Login extends React.Component {
     } else {
       // user has not logged in yet
       return (
-        <div>
-          <label>Team Code: </label>
-          <input onChange={this.teamcodeHandler.bind(this)} placeholder="Enter Team Code"/>
-          <label>Password: </label>
-          <input onChange={this.passwordHandler.bind(this)} placeholder="Enter Password"/>
-          <button onClick={this.loginHandler.bind(this)}>Login</button>
+        <div className="login panel col-sm-4 col-sm-offset-4">
+          <div className="panel-heading"><h3>Login</h3></div>
+          <div className="panel-body">
+            <label>Team Code: </label>
+            <input onChange={this.teamcodeHandler.bind(this)} placeholder="Enter Team Code"/>
+          </div>
+          <div className="panel-body">
+            <label>Password: </label>
+            <input onChange={this.passwordHandler.bind(this)} placeholder="Enter Password"/>
+            <button onClick={this.loginHandler.bind(this)}>Login</button>
+          </div>
         </div>
       )
     }
