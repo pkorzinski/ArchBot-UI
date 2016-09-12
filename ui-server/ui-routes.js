@@ -10,8 +10,6 @@ var bcrypt = require('bcrypt');
 var findAllMessages = q.nbind(Message.find, Message);
 var findTeam = q.nbind(Team.findOne, Team);
 
-var counter = 0;
-
 module.exports = function(app) {
 
   // Needs to check for session auth or other auth to release messages by username
@@ -44,6 +42,7 @@ module.exports = function(app) {
     console.log('body received', tc, pass);
       findTeam({ team: tc })
         .then(function(found) {
+          console.log('FOUND: ', found);
           if (found) {
             if (found.password === pass) {
               var obj = {auth: true};
@@ -101,7 +100,7 @@ module.exports = function(app) {
         } else {
           var password = bcrypt.genSaltSync(10).slice(7, 15);
           Team.create({
-            key: counter++,
+            key: req.body.ts,
             team: teamCode,
             password: password
           })
