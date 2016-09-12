@@ -21629,7 +21629,8 @@
 	    _this.state = {
 	      hasData: false,
 	      data: [],
-	      unfilteredData: []
+	      unfilteredData: [],
+	      teamCode: props.teamCode
 	    };
 
 	    return _this;
@@ -21646,14 +21647,31 @@
 	      // condition for using API with or without adding username
 	      var addUserToUrl = username || "";
 	      var self = this;
-	      fetch("/api/messages/" + addUserToUrl, { method: "GET" }).then(function (response) {
-	        return response.json();
-	      }).then(function (data) {
-	        console.log(data);
-	        self.setState({ data: data });
-	      }).catch(function (error) {
-	        console.error(error);
-	      });
+
+	      console.log('INSIDE FETCHAPI', self.state);
+
+	      if (self.state.teamCode) {
+	        if (addUserToUrl) {
+	          fetch('api/messages/' + self.state.teamCode + '/' + addUserToUrl, { method: 'GET' }).then(function (response) {
+	            return response.json();
+	          }).then(function (data) {
+	            console.log(data);
+	            self.setState({ data: data });
+	          }).catch(function (error) {
+	            console.error(error);
+	          });
+	        } else {
+	          console.log('INSIDE ELSE', self.state.teamCode);
+	          fetch("/api/messages/" + self.state.teamCode, { method: "GET" }).then(function (response) {
+	            return response.json();
+	          }).then(function (data) {
+	            console.log(data);
+	            self.setState({ data: data });
+	          }).catch(function (error) {
+	            console.error(error);
+	          });
+	        }
+	      }
 	    }
 	  }, {
 	    key: 'getOneUser',

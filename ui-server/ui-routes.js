@@ -12,7 +12,6 @@ var findTeam = q.nbind(Team.findOne, Team);
 
 module.exports = function(app) {
 
-  // Needs to check for session auth or other auth to release messages by username
   app.get('/api/messages/:team/:username', function(req, res) {
     findAllMessages({
       user: req.params.username,
@@ -26,9 +25,11 @@ module.exports = function(app) {
       });
   });
 
-  app.get('/api/messages/team/:teamCode', function(req, res) {
+  app.get('/api/messages/:teamCode', function(req, res) {
+    console.log('TEAMCODE GET', req.params.teamCode);
     findAllMessages({ team: req.params.teamCode })
       .then(function(messages) {
+        console.log('INSIDE THEN', messages);
         res.json(messages);
       })
       .fail(function(err) {
