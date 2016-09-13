@@ -94,10 +94,12 @@ module.exports = function(app) {
   });
 
   // Route for authentication of team to allow access to a team's messages.
-  app.post('/api/teams', function(req, res) {
+  app.post('/api/teams/', function(req, res) {
     var teamCode = req.body.team;
+    console.log('/API/TEAMS', req.body);
     findTeam({ team: teamCode })
       .then(function(found) {
+        console.log('FOUND ', found)
         if (found) {
           res.send(JSON.stringify(found));
         } else {
