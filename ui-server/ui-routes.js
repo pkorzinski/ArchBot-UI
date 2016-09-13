@@ -101,7 +101,7 @@ module.exports = function(app) {
       .then(function(found) {
         console.log('FOUND ', found)
         if (found) {
-          res.send(JSON.stringify(found));
+          res.json(found);
         } else {
           var password = bcrypt.genSaltSync(10).slice(7, 15);
           Team.create({
@@ -110,7 +110,7 @@ module.exports = function(app) {
             password: password
           })
             .then(function(found) {
-              res.send(JSON.stringify(found));
+              res.json(found);
             });
         }
       });
